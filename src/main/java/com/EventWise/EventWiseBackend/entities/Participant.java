@@ -1,3 +1,4 @@
 package com.EventWise.EventWiseBackend.entities;
-public class Event {
+
+public class Participant {
 }
