@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Events</title>
+</head>
+<body>
+<h1>Events</h1>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Date</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Address</th>
+    <th>Public</th>
+    <th>Organiser</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="event : ${events}">
+    <td th:text="${event.id}"></td>
+    <td th:text="${event.eventDate}"></td>
+    <td th:text="${event.eventName}"></td>
+    <td th:text="${event.eventDescription}"></td>
+    <td th:text="${event.eventAddress}"></td>
+    <td th:text="${event.public ? 'Yes' : 'No'}"></td>
+    <td th:text="${event.eventOrganiser}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

@@ -3,15 +3,16 @@ package com.EventWise.EventWiseBackend.controller;
 import com.EventWise.EventWiseBackend.EventNotFoundException;
 import com.EventWise.EventWiseBackend.entities.Event;
 import com.EventWise.EventWiseBackend.service.EventService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
+@Tag(name = "entity controller", description = "description")
 public class EventController {
 
     private final EventService eventService;
@@ -38,23 +39,23 @@ public class EventController {
 
     @PostMapping("/events")
     public ResponseEntity<Event> createEvent(@RequestBody Event event){
-        return ResponseEntity.ok(eventService.createEvent(event));
+        return ResponseEntity.ok(eventService.saveEvent(event));
     }
 
-    @PutMapping("/events/{id}")
+  /*  @PutMapping("/events/{id}")
     public ResponseEntity<Event> updateEvent(@PathVariable Long id, @RequestBody Event event){
-        return ResponseEntity.ok(eventService.updateEvent(id, event));
-    }
+        return ResponseEntity.ok(eventService.(id, event));
+    }*/
 
-    @DeleteMapping("/events")
+  /*  @DeleteMapping("/events")
     public ResponseEntity<Void> deleteAllEvents(){
-        eventService.deleteAllEvent();
+        eventService.();
         return ResponseEntity.noContent().build();
-    }
+    }*/
 
     @DeleteMapping("/events/{id}")
     public ResponseEntity<Void> deleteEventById(@PathVariable Long id){
-        eventService.deleteEventById(id);
+        eventService.deleteEvent(id);
         return ResponseEntity.noContent().build();
     }
 }
