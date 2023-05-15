@@ -1,4 +1,4 @@
-package com.EventWise.EventWiseBackend;
+package com.EventWise.EventWiseBackend.exceptions;
 
 public class EventNotFoundException extends RuntimeException  {
     public EventNotFoundException(String message) {

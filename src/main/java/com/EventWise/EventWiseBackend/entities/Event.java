@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -29,8 +27,9 @@ public class Event {
     @Column(nullable = true)
     private String eventAddress;
     private boolean isPublic;
-    @Column(nullable = false)
-    private String eventOrganiser;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User eventOrganiser;
     @OneToMany(mappedBy = "event")
     private Set<Participation> participations = new HashSet<>();
 }

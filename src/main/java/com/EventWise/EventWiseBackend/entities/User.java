@@ -22,6 +22,8 @@ public class User {
     private String password;
     private String email;
     private String displayName;
+    @OneToMany(mappedBy = "eventOrganiser")
+    private Set<Event> event = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
     private Set<Participation> participations = new HashSet<>();
