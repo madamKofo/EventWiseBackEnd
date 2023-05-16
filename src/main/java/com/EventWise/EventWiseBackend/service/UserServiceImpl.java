@@ -1,63 +1,62 @@
 package com.EventWise.EventWiseBackend.service;
 
 
-import com.EventWise.EventWiseBackend.DTO.UserDTO;
+import com.EventWise.EventWiseBackend.DTO.UserCreateDTO;
+import com.EventWise.EventWiseBackend.DTO.UserDto;
 import com.EventWise.EventWiseBackend.entities.User;
 import com.EventWise.EventWiseBackend.exceptions.UserNotFoundException;
+import com.EventWise.EventWiseBackend.mapper.UserMapper;
 import com.EventWise.EventWiseBackend.repository.UserRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
-    private ModelMapper modelMapper;
+    private final UserRepository userRepository;
+    private final UserMapper modelMapper;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper modelMapper) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
     }
 
     @Override
-    public List<UserDTO> getAllUsers() {
+    public List<UserCreateDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream()
-                .map(user -> modelMapper.map(user, UserDTO.class))
+                .map(user -> modelMapper.toCreateDto(user))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public UserDTO createUser(UserDTO userDTO) {
-        User user = modelMapper.map(userDTO, User.class);
-        User savedUser = userRepository.save(user);
-        return modelMapper.map(savedUser, UserDTO.class);
+    public UserDto createUser(UserCreateDTO userCreateDTO) {
+        User user = modelMapper.toEntity(userCreateDTO);
+        userRepository.save(user);
+        return modelMapper.toDto(user);
     }
 
     @Override
-    public Optional<User> getUserById(Long id) {
+    public UserDto getUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
-        return modelMapper.map(user, (Type) UserDTO.class);
+        return modelMapper.toDto(user);
     }
 
     @Override
-    public UserDTO updateUser(Long id, UserDTO userDTO) {
+    public UserCreateDTO updateUser(Long id, UserCreateDTO userCreateDTO) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
 
         // update user fields
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setEmail(userDTO.getEmail());
-        user.setDisplayName(userDTO.getDisplayName());
+        user.setFirstName(userCreateDTO.getFirstName());
+        user.setLastName(userCreateDTO.getLastName());
+        user.setEmail(userCreateDTO.getEmail());
+        user.setDisplayName(userCreateDTO.getDisplayName());
 
         User savedUser = userRepository.save(user);
-        return modelMapper.map(savedUser, UserDTO.class);
+        return modelMapper.toCreateDto(savedUser);
     }
 
     @Override

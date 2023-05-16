@@ -1,6 +1,7 @@
 package com.EventWise.EventWiseBackend.mapper;
 
-import com.EventWise.EventWiseBackend.DTO.UserDTO;
+import com.EventWise.EventWiseBackend.DTO.UserCreateDTO;
+import com.EventWise.EventWiseBackend.DTO.UserDto;
 import com.EventWise.EventWiseBackend.entities.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -13,11 +14,15 @@ public class UserMapper {
         this.modelMapper = modelMapper;
     }
 
-    public UserDTO toDTO(User user) {
-        return modelMapper.map(user, UserDTO.class);
+    public UserCreateDTO toCreateDto(User user) {
+        return modelMapper.map(user, UserCreateDTO.class);
     }
 
-    public User toEntity(UserDTO userDTO) {
-        return modelMapper.map(userDTO, User.class);
+    public UserDto toDto(User user) {
+        return modelMapper.map(user, UserDto.class);
+    }
+
+    public User toEntity(UserCreateDTO userCreateDTO) {
+        return modelMapper.map(userCreateDTO, User.class);
     }
 }

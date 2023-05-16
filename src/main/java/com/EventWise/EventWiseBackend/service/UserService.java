@@ -1,17 +1,16 @@
 package com.EventWise.EventWiseBackend.service;
 
-import com.EventWise.EventWiseBackend.DTO.UserDTO;
-import com.EventWise.EventWiseBackend.entities.User;
+import com.EventWise.EventWiseBackend.DTO.UserCreateDTO;
+import com.EventWise.EventWiseBackend.DTO.UserDto;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
-    List<UserDTO> getAllUsers();
-    UserDTO createUser(UserDTO userDTO);
+    List<UserCreateDTO> getAllUsers();
+    UserDto createUser(UserCreateDTO userCreateDTO);
 
-    Optional<User> getUserById(Long id);
-    UserDTO updateUser(Long id, UserDTO userDTO);
+    UserDto getUserById(Long id);
+    UserCreateDTO updateUser(Long id, UserCreateDTO userCreateDTO);
     boolean deleteUser(Long id);
 }
 

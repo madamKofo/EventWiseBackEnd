@@ -1,15 +1,12 @@
 package com.EventWise.EventWiseBackend.controller;
 
-import com.EventWise.EventWiseBackend.DTO.UserDTO;
-import com.EventWise.EventWiseBackend.entities.User;
+import com.EventWise.EventWiseBackend.DTO.UserCreateDTO;
+import com.EventWise.EventWiseBackend.DTO.UserDto;
 import com.EventWise.EventWiseBackend.service.UserService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -19,26 +16,26 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<User>> getUserById(@PathVariable Long id) {
-        Optional<User> userDTO = userService.getUserById(id);
-        if (userDTO != null) {
-            return ResponseEntity.ok(userDTO);
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+        UserDto userCreateDTO = userService.getUserById(id);
+        if (userCreateDTO != null) {
+            return ResponseEntity.ok(userCreateDTO);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
-        UserDTO createdUserDTO = userService.createUser(userDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUserDTO);
+    public ResponseEntity<UserDto> createUser(@RequestBody UserCreateDTO userCreateDTO) {
+        UserDto userDto = userService.createUser(userCreateDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
-        UserDTO updatedUserDTO = userService.updateUser(id, userDTO);
-        if (updatedUserDTO != null) {
-            return ResponseEntity.ok(updatedUserDTO);
+    public ResponseEntity<UserCreateDTO> updateUser(@PathVariable Long id, @RequestBody UserCreateDTO userCreateDTO) {
+        UserCreateDTO updatedUserCreateDTO = userService.updateUser(id, userCreateDTO);
+        if (updatedUserCreateDTO != null) {
+            return ResponseEntity.ok(updatedUserCreateDTO);
         } else {
             return ResponseEntity.notFound().build();
         }
