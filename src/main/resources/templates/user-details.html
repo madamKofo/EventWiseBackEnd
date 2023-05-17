@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>User Details</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<!-- Navbar code -->
+<!-- ... -->
+<div class="container">
+  <h2>User Details</h2>
+  <form th:action="@{/users}" th:object="${userCreateDTO}" method="post">
+    <!-- Form fields -->
+    <!-- ... -->
+    <button type="submit" class="btn btn-primary">Update User</button>
+  </form>
+  <form th:action="@{/users/__${userCreateDTO.id}__}" method="post">
+    <input type="hidden" name="_method" value="DELETE"/>
+    <button type="submit" class="btn btn-danger">Delete User</button>
+  </form>
+</div>
+<!-- JavaScript code -->
+<!-- ... -->
+</body>
+</html>
+``
