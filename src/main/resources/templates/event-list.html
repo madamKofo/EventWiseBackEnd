@@ -18,24 +18,28 @@
         <a class="nav-link" href="#">Participants</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/events">Events</a>
+        <a class="nav-link" href="/user/{userId}/events/create">Create Event</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/user/{userId}/events/event-list">Events</a>
       </li>
     </ul>
     <span class="navbar-text">Welcome, [Username]</span>
   </div>
 </nav>
 
+<h2>Events</h2>
 <div class="container">
-  <h2>Events</h2>
   <div class="row">
-    <div class="col-md-4 mb-4">
+    <div th:each="event : ${events}" class="col-md-4 mb-4">
       <div class="card">
-        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Event Image">
+        <img th:src="${event.eventImageUrl}" class="card-img-top" alt="Event Image">
         <div class="card-body">
-          <h5 class="card-title">Event Name</h5>
-          <p class="card-text">Event Description</p>
+          <h5 class="card-title" th:text="${event.eventName}"></h5>
+          <p class="card-text" th:text="${event.eventDescription}"></p>
           <a href="#" class="btn btn-primary">Edit</a>
           <a href="#" class="btn btn-danger">Delete</a>
+          <a th:href="@{'/user/' + ${userId} + '/events/' + ${event.eventId} + '/participants'}" class="btn btn-info">View Participants</a>
         </div>
       </div>
     </div>

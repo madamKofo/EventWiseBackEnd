@@ -18,7 +18,10 @@
                 <a class="nav-link" href="#">Participants</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Events</a>
+                <a class="nav-link" href="/user/{userId}/events/create">Create Event</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/user/{userId}/events/event-list">Events</a>
             </li>
         </ul>
         <span class="navbar-text">Welcome, [Username]</span>
@@ -26,8 +29,8 @@
 </nav>
 <div class="container">
     <h2>Create Event</h2>
-    <form th:action="@{/user/{userId}/events(userId=${userId})}" th:object="${eventDto}" method="post">
-    <div class="form-group">
+    <form th:action="@{/user/{userId}/events(userId=${userId})}" th:object="${eventDto}" method="post" id="createEventForm">
+        <div class="form-group">
             <label for="eventDate">Event Date</label>
             <input type="date" class="form-control" id="eventDate" th:field="*{eventDate}" required>
         </div>
@@ -43,15 +46,22 @@
             <label for="eventAddress">Event Address</label>
             <input type="text" class="form-control" id="eventAddress" th:field="*{eventAddress}" required>
         </div>
-        <!--<div class="form-group">
+        <div class="form-group">
             <label for="eventImageUrl">Event Image URL</label>
             <input type="text" class="form-control" id="eventImageUrl" th:field="*{eventImageUrl}">
-        </div>-->
+        </div>
         <button type="submit" class="btn btn-primary">Create Event</button>
+        <button type="button" class="btn btn-secondary" onclick="resetForm()">Clear Fields</button>
     </form>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function resetForm() {
+        document.getElementById("createEventForm").reset();
+    }
+</script>
 </body>
 </html>
+

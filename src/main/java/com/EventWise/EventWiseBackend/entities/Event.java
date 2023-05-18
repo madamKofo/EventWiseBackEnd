@@ -27,6 +27,7 @@ public class Event {
     @Column(nullable = true)
     private String eventAddress;
     private boolean isPublic;
+    private String eventImageUrl;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User eventOrganiser;
