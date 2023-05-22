@@ -1,6 +1,7 @@
 package com.EventWise.EventWiseBackend.service;
 
 import com.EventWise.EventWiseBackend.DTO.CreateParticipationRequest;
+import com.EventWise.EventWiseBackend.DTO.ParticipantDto;
 import com.EventWise.EventWiseBackend.entities.Event;
 import com.EventWise.EventWiseBackend.entities.Participation;
 import com.EventWise.EventWiseBackend.entities.User;
@@ -13,6 +14,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -66,5 +72,32 @@ public class ParticipationServiceImpl implements ParticipationService {
         Participation participation = participationRepository.findById(participationId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid participation ID"));
         participationRepository.delete(participation);
+    }
+
+
+
+
+    @Override
+    public List<ParticipantDto> getParticipantsForEvent(Long eventId) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new EventNotFoundException("Event not found"));
+
+        Set<Participation> participations = event.getParticipations();
+
+        if (participations.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return participations.stream()
+                .map(participation -> {
+                    ParticipantDto participantDto = new ParticipantDto();
+                    participantDto.setId(participation.getUser().getId());
+                    participantDto.setFirstName(participation.getUser().getFirstName());
+                    participantDto.setLastName(participation.getUser().getLastName());
+                    participantDto.setEmail(participation.getUser().getEmail());
+                    participantDto.setOrganiserHasApproved(participation.isOrganiserHasApproved());
+                    participantDto.setParticipantHasApproved(participation.isParticipantHasApproved());
+                    return participantDto;
+                })
+                .collect(Collectors.toList());
     }
 }

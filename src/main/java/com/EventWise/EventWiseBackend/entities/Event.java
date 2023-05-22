@@ -1,15 +1,13 @@
 package com.EventWise.EventWiseBackend.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
 @Entity
 public class Event {
     @Id
@@ -27,6 +25,7 @@ public class Event {
     @Column(nullable = true)
     private String eventAddress;
     private boolean isPublic;
+    private String eventImageUrl;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User eventOrganiser;

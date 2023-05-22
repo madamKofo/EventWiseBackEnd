@@ -1,10 +1,14 @@
 package com.EventWise.EventWiseBackend.controller;
 
 import com.EventWise.EventWiseBackend.DTO.CreateParticipationRequest;
+import com.EventWise.EventWiseBackend.DTO.ParticipantDto;
 import com.EventWise.EventWiseBackend.entities.Participation;
 import com.EventWise.EventWiseBackend.service.ParticipationService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/participations")
@@ -15,6 +19,7 @@ public class ParticipationController {
     public ParticipationController(ParticipationService participationService) {
         this.participationService = participationService;
     }
+
 
     @PostMapping("/")
     public ResponseEntity<Participation> createParticipation(@RequestBody CreateParticipationRequest request) {

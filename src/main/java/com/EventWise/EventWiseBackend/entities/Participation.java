@@ -2,15 +2,13 @@ package com.EventWise.EventWiseBackend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
 
 @Entity
-@Getter
-@Setter
+@Data
 public class Participation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

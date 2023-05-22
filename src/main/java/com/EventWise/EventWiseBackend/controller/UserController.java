@@ -4,11 +4,12 @@ import com.EventWise.EventWiseBackend.DTO.UserCreateDTO;
 import com.EventWise.EventWiseBackend.DTO.UserDto;
 import com.EventWise.EventWiseBackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.webjars.NotFoundException;
 
-@RestController
+@Controller
 @RequestMapping("/users")
 public class UserController {
 
@@ -16,38 +17,46 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
-        UserDto userCreateDTO = userService.getUserById(id);
-        if (userCreateDTO != null) {
-            return ResponseEntity.ok(userCreateDTO);
+    public String getUserById(@PathVariable Long id, Model model) {
+        UserDto userDto = userService.getUserById(id);
+        if (userDto != null) {
+            model.addAttribute("userCreateDTO", userDto);
+            return "user-details"; // Return the name of the Thymeleaf template
         } else {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("User not found"); // Customize exception handling as per your requirements
         }
     }
 
-    @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserCreateDTO userCreateDTO) {
-        UserDto userDto = userService.createUser(userCreateDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userDto);
+    @GetMapping("/create")
+    public String showCreateUser(Model model) {
+        model.addAttribute("userCreateDTO", new UserCreateDTO());
+        return "create-user";
     }
 
+    @PostMapping
+    public String createUser(@ModelAttribute("userCreateDTO") UserCreateDTO userCreateDTO) {
+        UserDto userDto = userService.createUser(userCreateDTO);
+        return "redirect:/users/" + userDto.getId(); // Redirect to the user details page
+    }
+
+
     @PutMapping("/{id}")
-    public ResponseEntity<UserCreateDTO> updateUser(@PathVariable Long id, @RequestBody UserCreateDTO userCreateDTO) {
+    public String updateUser(@PathVariable Long id, @ModelAttribute("userCreateDTO") UserCreateDTO userCreateDTO) {
         UserCreateDTO updatedUserCreateDTO = userService.updateUser(id, userCreateDTO);
         if (updatedUserCreateDTO != null) {
-            return ResponseEntity.ok(updatedUserCreateDTO);
+            return "redirect:/users/" + id; // Redirect to the updated user details page
         } else {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("User not found"); // Customize exception handling as per your requirements
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public String deleteUser(@PathVariable Long id) {
         boolean isDeleted = userService.deleteUser(id);
         if (isDeleted) {
-            return ResponseEntity.noContent().build();
+            return "redirect:/users"; // Redirect to the user listing page
         } else {
-            return ResponseEntity.notFound().build();
+            throw new NotFoundException("User not found"); // Customize exception handling as per your requirements
         }
     }
 
