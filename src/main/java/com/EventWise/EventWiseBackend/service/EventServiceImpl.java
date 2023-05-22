@@ -10,12 +10,18 @@ import com.EventWise.EventWiseBackend.exceptions.UnauthorizedAccessException;
 import com.EventWise.EventWiseBackend.exceptions.UserNotFoundException;
 import com.EventWise.EventWiseBackend.mapper.EventMapper;
 import com.EventWise.EventWiseBackend.repository.EventRepository;
+import com.EventWise.EventWiseBackend.repository.ParticipationRepository;
 import com.EventWise.EventWiseBackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -23,18 +29,36 @@ public class EventServiceImpl implements EventService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final EventMapper eventMapper;
+    private final ParticipationRepository participationRepository;
 
     @Autowired
-    public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository, EventMapper eventMapper) {
+    public EventServiceImpl(EventRepository eventRepository,
+                            UserRepository userRepository,
+                            EventMapper eventMapper,
+                            ParticipationRepository participationRepository) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
         this.eventMapper = eventMapper;
+        this.participationRepository = participationRepository;
     }
 
     @Override
     public List<EventDto> getAllEventsCreatedByUserId(Long userId) {
         List<Event> events = eventRepository.findAllByEventOrganiserId(userId);
-        var eventDTOs = events.stream().map(e ->eventMapper.toDTO(e)).toList();
+        List<EventDto> eventDTOs = new ArrayList<>();
+
+        for (Event event : events) {
+            EventDto eventDto = new EventDto();
+            eventDto.setEventId(event.getId());
+            eventDto.setEventName(event.getEventName());
+            eventDto.setEventDescription(event.getEventDescription());
+            eventDto.setEventDate(event.getEventDate());
+            eventDto.setEventAddress(event.getEventAddress());
+            eventDto.setEventImageUrl(event.getEventImageUrl());
+            eventDto.setEventOrganiser(event.getEventOrganiser().getDisplayName());
+            eventDTOs.add(eventDto);
+        }
+
         return eventDTOs;
     }
 
@@ -58,6 +82,36 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public List<ParticipantDto> getParticipantsForEventCreatedByUser(Long userId) {
+        List<Event> events = eventRepository.findAllByEventOrganiserId(userId);
+
+        if (events.isEmpty()) {
+            throw new EventNotFoundException("Event not found");
+        }
+
+        List<ParticipantDto> participants = new ArrayList<>();
+
+        for (Event event : events) {
+            List<Participation> participations = participationRepository.findAllByEvent(event);
+
+            for (Participation participation : participations) {
+                User participant = participation.getUser();
+                ParticipantDto participantDto = new ParticipantDto();
+                participantDto.setId(participant.getId());
+                participantDto.setFirstName(participant.getFirstName());
+                participantDto.setLastName(participant.getLastName());
+                participantDto.setEmail(participant.getEmail());
+                participantDto.setOrganiserHasApproved(participation.isOrganiserHasApproved());
+                participantDto.setParticipantHasApproved(participation.isParticipantHasApproved());
+                participants.add(participantDto);
+            }
+        }
+
+        return participants;
+    }
+
+
+    @Override
     public List<ParticipantDto> getEventParticipants(Long eventId, Long userId) {
         // Check if the event exists
         Event event = eventRepository.findById(eventId)
@@ -69,6 +123,9 @@ public class EventServiceImpl implements EventService {
         }*/
 
         List<ParticipantDto> participants = new ArrayList<>();
+        if (participants.isEmpty()) {
+            return participants;
+        }
 
         for (Participation participation : event.getParticipations()) {
             User participantUser = participation.getUser();

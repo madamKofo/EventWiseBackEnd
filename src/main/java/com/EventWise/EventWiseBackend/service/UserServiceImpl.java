@@ -10,6 +10,7 @@ import com.EventWise.EventWiseBackend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,10 +39,36 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findUserByUserName(String userName) throws UserNotFoundException {
+        return null;
+    }
+
+    @Override
+    public UserDto findUserByUserNameAndPassword(String userName, String password) throws UserNotFoundException {
+        Optional<User> optionalUser = userRepository.findByDisplayNameAndPassword(userName, password);
+
+        if(optionalUser.isEmpty()) {
+            throw new UserNotFoundException(userName, password);
+        }
+
+        var user= optionalUser.get();
+
+        var userDto = modelMapper.toDto(user);
+        return  userDto;
+    }
+
+    @Override
     public UserDto getUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
         return modelMapper.toDto(user);
+    }
+
+    @Override
+    public String getUserName(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
+        return user.getDisplayName();
     }
 
     @Override
@@ -66,5 +93,22 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
         return true;
     }
+
+  /*  @Override
+    public UserDetails loadUserByUsername(String displayName) throws UsernameNotFoundException {
+        Optional<User> userOptional  = userRepository.findByDisplayName(displayName);
+
+        if (userOptional  == null) {
+            throw new UsernameNotFoundException("User not found with username: " + displayName);
+        }
+
+        User user = userOptional.get();
+        // Create and return a UserDetails object based on the retrieved user
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getDisplayName())
+                .password(user.getPassword())
+                .roles("USER")  // Add roles or authorities if needed
+                .build();
+    }*/
 }
 

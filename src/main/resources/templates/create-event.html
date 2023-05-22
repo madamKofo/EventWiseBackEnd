@@ -18,15 +18,16 @@
                 <a class="nav-link" href="#">Participants</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/user/{userId}/events/create">Create Event</a>
+                <a class="nav-link" href="/user/{userId}/events/create" th:href="@{'/user/' + ${userId} + '/events/create'}">Create Event</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/user/{userId}/events/event-list">Events</a>
+                <a class="nav-link" th:href="@{/user/{userId}/events/event-list(userId=${userId})}" >Events</a>
             </li>
         </ul>
-        <span class="navbar-text">Welcome, [Username]</span>
+        <span class="navbar-text" th:text="'Welcome, ' + ${username}">Welcome, [Username]</span>
     </div>
 </nav>
+
 <div class="container">
     <h2>Create Event</h2>
     <form th:action="@{/user/{userId}/events(userId=${userId})}" th:object="${eventDto}" method="post" id="createEventForm">
@@ -54,9 +55,11 @@
         <button type="button" class="btn btn-secondary" onclick="resetForm()">Clear Fields</button>
     </form>
 </div>
+<!-- Separate Scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script>
     function resetForm() {
         document.getElementById("createEventForm").reset();

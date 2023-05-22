@@ -14,4 +14,5 @@ public interface EventService {
     EventDto createEvent(Long userId, EventDto eventDto);
 
     List<ParticipantDto> getEventParticipants(Long eventId, Long userId);
+    List<ParticipantDto> getParticipantsForEventCreatedByUser(Long eventId);
 }

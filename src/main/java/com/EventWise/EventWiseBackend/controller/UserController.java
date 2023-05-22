@@ -4,8 +4,6 @@ import com.EventWise.EventWiseBackend.DTO.UserCreateDTO;
 import com.EventWise.EventWiseBackend.DTO.UserDto;
 import com.EventWise.EventWiseBackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +26,6 @@ public class UserController {
             throw new NotFoundException("User not found"); // Customize exception handling as per your requirements
         }
     }
-
 
     @GetMapping("/create")
     public String showCreateUser(Model model) {
@@ -62,7 +59,6 @@ public class UserController {
             throw new NotFoundException("User not found"); // Customize exception handling as per your requirements
         }
     }
-
 
 }
 

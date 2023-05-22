@@ -1,4 +1,9 @@
 package com.EventWise.EventWiseBackend.service;
 
-public class LoginService {
+
+import com.EventWise.EventWiseBackend.entities.Login;
+
+public interface LoginService {
+
+    boolean isLoginValid(Login login);
 }
