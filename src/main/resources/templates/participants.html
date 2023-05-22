@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>EventWise</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">EventWise</a>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Sign Out</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/user/{userId}/events/participants" th:href="@{'/user/' + ${userId} + '/events/participants'}">Participants</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/user/{userId}/events/create" th:href="@{'/user/' + ${userId} + '/events/create'}">Create Event</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/user/{userId}/events/event-list(userId=${userId})}">Events</a>
+      </li>
+    </ul>
+    <span class="navbar-text" th:text="'Welcome, ' + ${username}">Welcome, [Username]</span>
+  </div>
+</nav>
+
+<h2>Event Participants</h2>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Participant ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Organizer Approval</th>
+          <th>Participant Approval</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="participant : ${participants}">
+          <td th:text="${participant.id}"></td>
+          <td th:text="${participant.firstName}"></td>
+          <td th:text="${participant.lastName}"></td>
+          <td th:text="${participant.email}"></td>
+          <td th:text="${participant.organiserHasApproved} ? 'Approved' : 'Pending'"></td>
+          <td th:text="${participant.participantHasApproved} ? 'Approved' : 'Pending'"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Separate Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

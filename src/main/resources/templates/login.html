@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Create User</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">EventWise</a>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Sign Out</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Participants</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/user/{userId}/events/create" th:href="@{'/user/' + ${userId} + '/events/create'}">Create Event</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/user/{userId}/events/event-list(userId=${userId})}" >Events</a>
+      </li>
+    </ul>
+    <span class="navbar-text" th:text="'Welcome, ' + ${username}">Welcome, [Username]</span>
+  </div>
+</nav>
+
+
+<div class="container">
+  <h2>Login</h2>
+  <form th:action="@{/login}" method="post">
+    <div class="form-group">
+      <label for="displayName">Display Name</label>
+      <input type="text" class="form-control" id="displayName" name="displayName" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" name="password" required>
+    </div>
+    <button type="submit" class="btn btn-primary mr-2">Login</button>
+    <button type="reset" class="btn btn-secondary mr-2">Clear</button>
+    <a href="/signup" class="btn btn-primary ml-auto">Sign Up</a>
+  </form>
+
+</div>
+<!-- Separate Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
