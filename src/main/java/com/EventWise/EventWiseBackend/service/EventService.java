@@ -15,4 +15,6 @@ public interface EventService {
 
     List<ParticipantDto> getEventParticipants(Long eventId, Long userId);
     List<ParticipantDto> getParticipantsForEventCreatedByUser(Long eventId);
+
+    String deleteEvent(Long eventId, Long userId);
 }

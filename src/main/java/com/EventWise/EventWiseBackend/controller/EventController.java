@@ -71,5 +71,11 @@ public class EventController {
         return "view-participant"; // Return the name of the Thymeleaf template to display the event participants
     }
 
-
+    @PostMapping("/user/{userId}/events/{eventId}")
+    public String deleteEvent(@PathVariable("userId") Long userId, @PathVariable("eventId") Long eventId, Model model) {
+       var message =  eventService.deleteEvent(eventId, userId);
+        model.addAttribute("userId", userId);
+        model.addAttribute("eventId", eventId);
+        return "redirect:/user/" + userId + "/events/event-list";
+    }
 }

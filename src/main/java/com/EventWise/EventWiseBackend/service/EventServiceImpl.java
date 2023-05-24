@@ -110,6 +110,15 @@ public class EventServiceImpl implements EventService {
         return participants;
     }
 
+    @Override
+    public String deleteEvent(Long eventId, Long userId) {
+        var isEventExist = eventRepository.existsById(eventId);
+        if (!isEventExist)
+            return "event does not exist";
+        eventRepository.deleteById(eventId);
+        return "Event deleted successfully";
+    }
+
 
     @Override
     public List<ParticipantDto> getEventParticipants(Long eventId, Long userId) {
