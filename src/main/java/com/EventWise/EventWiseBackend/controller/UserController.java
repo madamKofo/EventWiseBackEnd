@@ -21,7 +21,7 @@ public class UserController {
 
     @GetMapping("/user/signup")
     public String showSignUp(Model model) {
-        model.addAttribute("user", new UserRegistrationDto());
+        model.addAttribute("user", new UserCreateDTO());
         return "sign-up";
     }
 
@@ -35,8 +35,8 @@ public class UserController {
 
     @PostMapping("/user/signup")
     public String createUser(@ModelAttribute UserCreateDTO userCreateDto) {
-        userService.save(userCreateDto);
-        return "redirect:/user/login";
+       var user = userService.save(userCreateDto);
+        return "redirect:/user/" + user.getId() + "/events/event-list";
     }
 
     @PostMapping("/user/login")

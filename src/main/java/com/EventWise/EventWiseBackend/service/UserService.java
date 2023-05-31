@@ -1,7 +1,7 @@
 package com.EventWise.EventWiseBackend.service;
 
 import com.EventWise.EventWiseBackend.DTO.UserCreateDTO;
-import com.EventWise.EventWiseBackend.DTO.UserRegistrationDto;
+
 import com.EventWise.EventWiseBackend.entities.User;
 
 public interface UserService {
