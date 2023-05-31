@@ -1,36 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Create User</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<head th:insert="~{navbar.html :: headerfiles}">
 </head>
 <body>
-<nav class="navbar navbar-expand navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">EventWise</a>
-    <div class="collapse navbar-collapse">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#">Sign Out</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Participants</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/user/{userId}/events/create" th:href="@{'/user/' + ${userId} + '/events/create'}">Create Event</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/user/{userId}/events/event-list(userId=${userId})}" >Events</a>
-            </li>
-        </ul>
-        <span class="navbar-text" th:text="'Welcome, ' + ${username}">Welcome, [Username]</span>
-    </div>
-</nav>
-
+<!-- Include the navbar fragment -->
+<header th:insert="~{navbar.html :: nav}"></header>
 
 <div class="container">
     <h2>Create User</h2>
-    <form th:action="@{/signup}" method="post">
+    <form th:action="@{/user/signup}" method="post">
         <div class="form-group">
             <label for="firstName">First Name</label>
             <input type="text" class="form-control" id="firstName" name="firstName" required>
@@ -60,10 +38,15 @@
     <p class="mt-4">Or sign up using:</p>
     <a href="https://accounts.google.com/signup" class="btn btn-outline-danger">Gmail</a>
 </div>
-<!-- Separate Scripts -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+<noscript th:insert="~{navbar.html :: jsfragment}" ></noscript>
+
+<script>
+    function resetForm() {
+        document.getElementById("createEventForm").reset();
+    }
+</script>
 
 </body>
 </html>

@@ -3,9 +3,7 @@ package com.EventWise.EventWiseBackend.mapper;
 import com.EventWise.EventWiseBackend.DTO.EventDto;
 import com.EventWise.EventWiseBackend.entities.Event;
 import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 @Configuration
 public class EventMapper {

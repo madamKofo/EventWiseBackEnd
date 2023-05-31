@@ -1,17 +1,14 @@
 package com.EventWise.EventWiseBackend.service;
 
 import com.EventWise.EventWiseBackend.DTO.UserCreateDTO;
-import com.EventWise.EventWiseBackend.DTO.UserDto;
+import com.EventWise.EventWiseBackend.DTO.UserRegistrationDto;
 import com.EventWise.EventWiseBackend.entities.User;
-import com.EventWise.EventWiseBackend.exceptions.UserNotFoundException;
-
-import java.util.List;
 
 public interface UserService {
-    List<UserCreateDTO> getAllUsers();
+   /* List<UserCreateDTO> getAllUsers();
 
     UserDto createUser(UserCreateDTO userCreateDTO);
-    User findUserByUserName(String userName) throws UserNotFoundException;
+    User findUserByDisplayName(String displayName) throws UserNotFoundException;
     UserDto findUserByUserNameAndPassword(String userName, String password) throws UserNotFoundException;
     UserDto getUserById(Long id);
 
@@ -19,6 +16,11 @@ public interface UserService {
 
     boolean deleteUser(Long id);
 
-    String getUserName(Long id);
+    String getUserName(Long id);*/
+
+   String getUserName(Long id);
+   User save(UserCreateDTO userCreateDTO);
+   User FindUserByEmailAndPassword(String email, String password);
+
 }
 

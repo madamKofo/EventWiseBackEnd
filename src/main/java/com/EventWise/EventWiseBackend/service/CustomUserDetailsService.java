@@ -1,4 +1,5 @@
 /*
+
 package com.EventWise.EventWiseBackend.service;
 
 import com.EventWise.EventWiseBackend.entities.User;
@@ -23,4 +24,5 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException(userNotFoundException.getLocalizedMessage());
         }
     }
-}*/
+
+*/

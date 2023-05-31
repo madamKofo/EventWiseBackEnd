@@ -17,15 +17,16 @@ public class EmailController {
     }
 
     @PostMapping("user/{userId}/send-email")
-    public String sendEmail(@RequestParam("email") String email, @PathVariable(value = "userId") Long userId, Model model) {
-        // Prepare the email content
-        String subject = "Invitation to participate";
-        String body = "You are invited to participate in an event. Please confirm your participation.";
-
+    public String sendEmail(@RequestParam("email") String email,
+                            @RequestParam("subject") String subject,
+                            @RequestParam("body") String body,
+                            @PathVariable(value = "userId") Long userId,
+                            Model model) {
         // Send the email
         emailService.sendEmail(email, subject, body);
         model.addAttribute("userId", userId);
         // Redirect to the desired page after sending the email
         return "redirect:/user/{userId}/events/participants";
     }
+
 }

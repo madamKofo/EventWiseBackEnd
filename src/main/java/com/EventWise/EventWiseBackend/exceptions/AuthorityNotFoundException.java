@@ -1,4 +1,5 @@
 /*
+
 package com.EventWise.EventWiseBackend.exceptions;
 
 
@@ -10,4 +11,5 @@ public class AuthorityNotFoundException extends Exception {
     }
 
 }
+
 */

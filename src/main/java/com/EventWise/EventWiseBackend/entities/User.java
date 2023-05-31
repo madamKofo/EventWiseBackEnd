@@ -3,9 +3,7 @@ package com.EventWise.EventWiseBackend.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 @Entity
@@ -13,7 +11,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
     private String lastName;
@@ -25,6 +23,8 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private Set<Participation> participations = new HashSet<>();
+
+
 
 }
 

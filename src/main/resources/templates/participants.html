@@ -1,31 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>EventWise</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<head th:insert="navbar.html :: headerfiles">
 </head>
 <body>
-<nav class="navbar navbar-expand navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">EventWise</a>
-  <div class="collapse navbar-collapse">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="#">Sign Out</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/user/{userId}/events/participants" th:href="@{'/user/' + ${userId} + '/events/participants'}">Participants</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/user/{userId}/events/create" th:href="@{'/user/' + ${userId} + '/events/create'}">Create Event</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/user/{userId}/events/event-list(userId=${userId})}">Events</a>
-      </li>
-    </ul>
-    <span class="navbar-text" th:text="'Welcome, ' + ${username}">Welcome, [Username]</span>
-  </div>
-</nav>
+<!-- Include the navbar fragment -->
+<header th:insert="navbar.html :: nav"></header>
 
 <h2>Event Participants</h2>
 <div class="container">

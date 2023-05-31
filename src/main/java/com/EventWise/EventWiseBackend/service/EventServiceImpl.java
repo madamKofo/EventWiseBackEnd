@@ -6,7 +6,6 @@ import com.EventWise.EventWiseBackend.entities.Event;
 import com.EventWise.EventWiseBackend.entities.Participation;
 import com.EventWise.EventWiseBackend.entities.User;
 import com.EventWise.EventWiseBackend.exceptions.EventNotFoundException;
-import com.EventWise.EventWiseBackend.exceptions.UnauthorizedAccessException;
 import com.EventWise.EventWiseBackend.exceptions.UserNotFoundException;
 import com.EventWise.EventWiseBackend.mapper.EventMapper;
 import com.EventWise.EventWiseBackend.repository.EventRepository;
@@ -14,14 +13,9 @@ import com.EventWise.EventWiseBackend.repository.ParticipationRepository;
 import com.EventWise.EventWiseBackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class EventServiceImpl implements EventService {

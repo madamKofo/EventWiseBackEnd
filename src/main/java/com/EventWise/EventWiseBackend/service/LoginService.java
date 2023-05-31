@@ -1,3 +1,5 @@
+/*
+
 package com.EventWise.EventWiseBackend.service;
 
 
@@ -7,3 +9,5 @@ public interface LoginService {
 
     boolean isLoginValid(Login login);
 }
+
+*/

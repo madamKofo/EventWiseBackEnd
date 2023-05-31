@@ -1,21 +1,54 @@
 package com.EventWise.EventWiseBackend.service;
 
-
 import com.EventWise.EventWiseBackend.DTO.UserCreateDTO;
-import com.EventWise.EventWiseBackend.DTO.UserDto;
+import com.EventWise.EventWiseBackend.DTO.UserRegistrationDto;
 import com.EventWise.EventWiseBackend.entities.User;
 import com.EventWise.EventWiseBackend.exceptions.UserNotFoundException;
-import com.EventWise.EventWiseBackend.mapper.UserMapper;
 import com.EventWise.EventWiseBackend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 @Service
 public class UserServiceImpl implements UserService {
-    private final UserRepository userRepository;
+
+    private UserRepository userRepository;
+
+    public UserServiceImpl(UserRepository userRepository) {
+        super();
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public User save(UserCreateDTO userCreateDTO) {
+        User user = new User();
+        user.setFirstName(userCreateDTO.getFirstName());
+        user.setLastName(userCreateDTO.getLastName());
+        user.setEmail(userCreateDTO.getEmail());
+        user.setDisplayName(userCreateDTO.getDisplayName());
+        user.setPassword(userCreateDTO.getPassword());
+
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User FindUserByEmailAndPassword(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        if (user == null)
+            return null;
+
+        if (user.getPassword().equals(password))
+            return user;
+
+        return null;
+    }
+
+    @Override
+    public String getUserName(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
+        return user.getDisplayName();
+    }
+
+ /*   private final UserRepository userRepository;
     private final UserMapper modelMapper;
 
     public UserServiceImpl(UserRepository userRepository, UserMapper modelMapper) {
@@ -39,22 +72,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByUserName(String userName) throws UserNotFoundException {
-        return null;
-    }
-
-    @Override
     public UserDto findUserByUserNameAndPassword(String userName, String password) throws UserNotFoundException {
         Optional<User> optionalUser = userRepository.findByDisplayNameAndPassword(userName, password);
 
-        if(optionalUser.isEmpty()) {
-            throw new UserNotFoundException(userName, password);
-        }
-
-        var user= optionalUser.get();
-
-        var userDto = modelMapper.toDto(user);
-        return  userDto;
+        return optionalUser.map(modelMapper::toDto)
+                .orElseThrow(() -> new UserNotFoundException(userName, password));
     }
 
     @Override
@@ -92,23 +114,5 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
         userRepository.delete(user);
         return true;
-    }
-
-  /*  @Override
-    public UserDetails loadUserByUsername(String displayName) throws UsernameNotFoundException {
-        Optional<User> userOptional  = userRepository.findByDisplayName(displayName);
-
-        if (userOptional  == null) {
-            throw new UsernameNotFoundException("User not found with username: " + displayName);
-        }
-
-        User user = userOptional.get();
-        // Create and return a UserDetails object based on the retrieved user
-        return org.springframework.security.core.userdetails.User
-                .withUsername(user.getDisplayName())
-                .password(user.getPassword())
-                .roles("USER")  // Add roles or authorities if needed
-                .build();
     }*/
 }
-

@@ -1,64 +1,106 @@
 package com.EventWise.EventWiseBackend.controller;
 
+import com.EventWise.EventWiseBackend.DTO.EventDto;
 import com.EventWise.EventWiseBackend.DTO.UserCreateDTO;
-import com.EventWise.EventWiseBackend.DTO.UserDto;
+import com.EventWise.EventWiseBackend.DTO.UserRegistrationDto;
+import com.EventWise.EventWiseBackend.entities.Login;
 import com.EventWise.EventWiseBackend.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.webjars.NotFoundException;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping
 public class UserController {
-
-    @Autowired
     private UserService userService;
 
-    @GetMapping("/{id}")
-    public String getUserById(@PathVariable Long id, Model model) {
-        UserDto userDto = userService.getUserById(id);
-        if (userDto != null) {
-            model.addAttribute("userCreateDTO", userDto);
-            return "user-details"; // Return the name of the Thymeleaf template
-        } else {
-            throw new NotFoundException("User not found"); // Customize exception handling as per your requirements
+    public UserController(UserService userService) {
+        super();
+        this.userService = userService;
+    }
+
+    @GetMapping("/user/signup")
+    public String showSignUp(Model model) {
+        model.addAttribute("user", new UserRegistrationDto());
+        return "sign-up";
+    }
+
+    @GetMapping(value = {"/"})
+    public String showLogIn(Model model) {
+        var loginData = new Login();
+        model.addAttribute("login", loginData);
+        return "home";
+    }
+
+
+    @PostMapping("/user/signup")
+    public String createUser(@ModelAttribute UserCreateDTO userCreateDto) {
+        userService.save(userCreateDto);
+        return "redirect:/user/login";
+    }
+
+    @PostMapping("/user/login")
+    public String login(@ModelAttribute Login login, Model model) {
+        var user = userService.FindUserByEmailAndPassword(login.getUserName(), login.getPassword());
+        if (user == null) {
+            model.addAttribute("errorMessage", "Invalid username or password. Please try again.");
+            return "login";
         }
+
+        return "redirect:/user/" + user.getId() + "/events/event-list";
+    }
+
+
+
+/*    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping
+    public String getAllUsers(Model model) {
+        List<UserCreateDTO> users = userService.getAllUsers();
+        model.addAttribute("users", users);
+        return "user-list";
+    }
+
+    @GetMapping("/{id}")
+    public String getUserById(@PathVariable("id") Long id, Model model) {
+        UserDto user = userService.getUserById(id);
+        model.addAttribute("user", user);
+        return "user-details";
     }
 
     @GetMapping("/create")
-    public String showCreateUser(Model model) {
-        model.addAttribute("userCreateDTO", new UserCreateDTO());
-        return "create-user";
+    public String createUserForm(Model model) {
+        model.addAttribute("user", new UserCreateDTO());
+        return "user-create";
     }
 
     @PostMapping
-    public String createUser(@ModelAttribute("userCreateDTO") UserCreateDTO userCreateDTO) {
-        UserDto userDto = userService.createUser(userCreateDTO);
-        return "redirect:/users/" + userDto.getId(); // Redirect to the user details page
+    public String createUser(@ModelAttribute UserCreateDTO userCreateDTO) {
+        userService.createUser(userCreateDTO);
+        return "redirect:/users";
     }
 
-
-    @PutMapping("/{id}")
-    public String updateUser(@PathVariable Long id, @ModelAttribute("userCreateDTO") UserCreateDTO userCreateDTO) {
-        UserCreateDTO updatedUserCreateDTO = userService.updateUser(id, userCreateDTO);
-        if (updatedUserCreateDTO != null) {
-            return "redirect:/users/" + id; // Redirect to the updated user details page
-        } else {
-            throw new NotFoundException("User not found"); // Customize exception handling as per your requirements
-        }
+    @GetMapping("/{id}/edit")
+    public String editUserForm(@PathVariable("id") Long id, Model model) {
+        UserDto user = userService.getUserById(id);
+        model.addAttribute("user", user);
+        return "user-edit";
     }
 
-    @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable Long id) {
-        boolean isDeleted = userService.deleteUser(id);
-        if (isDeleted) {
-            return "redirect:/users"; // Redirect to the user listing page
-        } else {
-            throw new NotFoundException("User not found"); // Customize exception handling as per your requirements
-        }
+    @PostMapping("/{id}")
+    public String updateUser(@PathVariable("id") Long id, @ModelAttribute UserCreateDTO updatedUser) {
+        userService.updateUser(id, updatedUser);
+        return "redirect:/users";
     }
 
+    @PostMapping("/{id}/delete")
+    public String deleteUser(@PathVariable("id") Long id) {
+        userService.deleteUser(id);
+        return "redirect:/users";
+    }*/
 }
-

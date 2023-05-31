@@ -1,3 +1,5 @@
+/*
+
 package com.EventWise.EventWiseBackend.service;
 
 import com.EventWise.EventWiseBackend.entities.Login;
@@ -21,3 +23,5 @@ public class LoginServiceImpl implements LoginService {
         }
     }
 }
+
+*/
