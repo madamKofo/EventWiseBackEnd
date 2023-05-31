@@ -1,4 +1,5 @@
 /*
+
 package com.EventWise.EventWiseBackend.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -39,4 +40,5 @@ public abstract class Auditable<V> {
     @JsonIgnore
     protected LocalDateTime lastModifiedDate;
 }
+
 */

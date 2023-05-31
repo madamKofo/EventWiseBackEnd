@@ -1,4 +1,5 @@
 /*
+
 package com.EventWise.EventWiseBackend.service;
 
 import com.EventWise.EventWiseBackend.entities.Authority;
@@ -39,4 +40,5 @@ public class AuthorityServiceImpl implements AuthorityService {
         return authorityRepository.findAll();
     }
 }
+
 */

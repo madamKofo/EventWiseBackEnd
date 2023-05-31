@@ -1,4 +1,5 @@
 /*
+
 package com.EventWise.EventWiseBackend.repository;
 
 
@@ -14,4 +15,5 @@ import java.util.UUID;
 public interface AuthorityRepository extends JpaRepository<Authority, Long> {
     Optional<Authority> findByName(String name);
 }
+
 */

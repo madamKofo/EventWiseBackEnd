@@ -1,4 +1,5 @@
 /*
+
 package com.EventWise.EventWiseBackend.service;
 
 
@@ -11,7 +12,8 @@ public interface AuthorityService {
 
     void createAuthority(Authority authority);
 
-    */
+
+*/
 /**
      * To find authority by name
      *
@@ -19,15 +21,18 @@ public interface AuthorityService {
      * @return optional of Authority
      *//*
 
+
    Authority findAuthorityByName(String name) throws AuthorityNotFoundException;
 
 
-    */
+
+*/
 /**
      * To find all authorities
      *
      * @return list of authorities
      *//*
+
 
     List<Authority> findAllAuthorities();
 }

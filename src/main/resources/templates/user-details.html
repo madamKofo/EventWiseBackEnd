@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{navbar.html :: headerfiles}">
+</head>
+
+<body>
+<!-- Include the navbar fragment -->
+<header th:insert="~{navbar.html :: nav}"></header>
+
+<div class="container">
+  <h2>User Details</h2>
+  <table class="table">
+    <tbody>
+    <tr>
+      <th>ID</th>
+      <td th:text="${user.id}">[User ID]</td>
+    </tr>
+    <tr>
+      <th>First Name</th>
+      <td th:text="${user.firstName}">[First Name]</td>
+    </tr>
+    <tr>
+      <th>Last Name</th>
+      <td th:text="${user.lastName}">[Last Name]</td>
+    </tr>
+    <tr>
+      <th>Email</th>
+      <td th:text="${user.email}">[Email]</td>
+    </tr>
+    <tr>
+      <th>Display Name</th>
+      <td th:text="${user.displayName}">[Display Name]</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<noscript th:insert="~{navbar.html :: jsfragment}"></noscript>
+</body>
+
+</html>

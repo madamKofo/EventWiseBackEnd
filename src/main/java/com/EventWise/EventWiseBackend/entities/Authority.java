@@ -1,4 +1,5 @@
 /*
+
 package com.EventWise.EventWiseBackend.entities;
 
 import jakarta.persistence.*;
@@ -20,4 +21,5 @@ public class Authority extends Auditable<String> implements Serializable {
     private String name;
     private boolean isActive;
 }
+
 */

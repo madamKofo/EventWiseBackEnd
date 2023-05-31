@@ -1,4 +1,5 @@
 /*
+
 package com.EventWise.EventWiseBackend.configure;
 
 import org.springframework.context.annotation.Bean;

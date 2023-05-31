@@ -1,4 +1,5 @@
 /*
+
 package com.EventWise.EventWiseBackend.configure;
 
 import org.springframework.data.domain.AuditorAware;
@@ -16,4 +17,5 @@ public class AuditAwareHandler implements AuditorAware<String> {
         return authentication != null ? Optional.of(authentication.getName()) : Optional.of(DEFAULT_AUDITOR);
     }
 }
+
 */
