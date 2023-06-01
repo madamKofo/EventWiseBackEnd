@@ -67,6 +67,7 @@ public class EventController {
         model.addAttribute("participants", participants);
         model.addAttribute("userId", userId);
         model.addAttribute("eventId", eventId);
+        model.addAttribute("username", userService.getUserName(userId));
         return "view-participant"; // Return the name of the Thymeleaf template to display the event participants
     }
 
@@ -75,6 +76,7 @@ public class EventController {
        var message =  eventService.deleteEvent(eventId, userId);
         model.addAttribute("userId", userId);
         model.addAttribute("eventId", eventId);
+        model.addAttribute("username", userService.getUserName(userId));
         return "redirect:/user/" + userId + "/events/event-list";
     }
 }

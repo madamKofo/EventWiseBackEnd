@@ -1,13 +1,16 @@
 package com.EventWise.EventWiseBackend.DTO;
 
 import com.EventWise.EventWiseBackend.entities.Event;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class EventDto {
     private Long eventId;
     private LocalDate eventDate;

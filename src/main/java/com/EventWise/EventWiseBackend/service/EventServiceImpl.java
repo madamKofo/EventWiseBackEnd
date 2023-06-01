@@ -125,12 +125,17 @@ public class EventServiceImpl implements EventService {
             throw new UnauthorizedAccessException("You are not authorized to access the participants of this event");
         }*/
 
-        List<ParticipantDto> participants = new ArrayList<>();
-        if (participants.isEmpty()) {
-            return participants;
-        }
+        //get all participations
+        //filter participation base on event id
+        //then get the users property using userid
 
-        for (Participation participation : event.getParticipations()) {
+        var participations = participationRepository.findAllByEvent(event);
+        List<ParticipantDto> participants = new ArrayList<>();
+
+        if (participations.isEmpty())
+            return participants;
+
+        for (var participation : participations) {
             User participantUser = participation.getUser();
             ParticipantDto participantDto = new ParticipantDto();
             participantDto.setId(participantUser.getId());
@@ -142,9 +147,6 @@ public class EventServiceImpl implements EventService {
 
             participants.add(participantDto);
         }
-
         return participants;
     }
-
-
 }

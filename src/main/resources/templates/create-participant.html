@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{navbar.html :: headerfiles}">
+</head>
+<body>
+<!-- Include the navbar fragment -->
+<header th:insert="~{navbar.html :: nav}"></header>
+
+<div class="container">
+  <h2>Invite Participant</h2>
+  <form method="post" th:action="@{/user/{userId}/events/{eventId}/send-email(userId=${userId}, eventId=${eventId})}" th:object="${eventParticipantDto}" >
+    <div class="form-group" >
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" class="form-control" th:field="*{firstName}" onblur="trimInput(this)" required>
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName"class="form-control" th:field="*{lastName}"  onblur="trimInput(this)" required>
+    </div>
+    <div class="form-group" >
+      <label for="email">Participant Email:</label>
+      <input type="email" id="email" class="form-control" th:field="*{email}" onblur="trimInput(this)" placeholder="Enter participant email">
+    </div>
+    <div class="form-group" >
+      <label for="subject">Email Subject:</label>
+      <input type="text"  id="subject" class="form-control" th:field="*{emailSubject}" onblur="trimInput(this)" placeholder="Enter email subject">
+    </div>
+    <div class="form-group" >
+      <label for="body">Email Body:</label>
+      <textarea class="form-control" id="body" th:field="*{emailBody}" rows="5" onblur="trimInput(this)" placeholder="Enter email body"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Send Email</button>
+  </form>
+
+</div>
+
+
+<noscript th:insert="~{navbar.html :: jsfragment}" ></noscript>
+
+<script>
+  function trimInput(input) {
+    input.value = input.value.trim();
+  }
+
+  function resetForm() {
+    document.getElementById("createEventForm").reset();
+  }
+</script>
+
+</body>
+</html>

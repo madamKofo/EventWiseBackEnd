@@ -1,6 +1,5 @@
 package com.EventWise.EventWiseBackend.DTO;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,12 +7,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
-    private Long id;
+@NoArgsConstructor
+public class EventParticipantDto {
     private String firstName;
     private String lastName;
     private String email;
-    private String displayName;
+    private String emailSubject;
+    private String emailBody;
 }
